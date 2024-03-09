@@ -1,0 +1,51 @@
+package org.wechat.component;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import org.springframework.stereotype.Component;
+import org.wechat.message.AbstractMessage;
+import org.wechat.message.ImageMessage;
+import org.wechat.message.TextMessage;
+
+import java.util.ArrayList;
+
+
+@Component
+public class XmlTranslator {
+  XStream xStream;
+  public XmlTranslator() {
+    Class[] classes = new Class[]{AbstractMessage.class, TextMessage.class, ImageMessage.class};
+    xStream = new XStream(new DomDriver());
+    xStream.allowTypes(classes);
+    xStream.processAnnotations(classes);
+  }
+
+  public String toXML(AbstractMessage abstractMessage) {
+    return xStream.toXML(abstractMessage);
+  }
+
+  public AbstractMessage toAbstractMessage(String xmlString) {
+    return (AbstractMessage) xStream.fromXML(xmlString);
+  }
+}
+
+
+class Main {
+  public static void main(String[] args) {
+    XmlTranslator xmlTranslator = new XmlTranslator();
+
+    String xmlString = new String("" +
+        "<xml>\n" +
+        "  <ToUserName>李伟</ToUserName>\n" +
+        "  <FromUserName>易刚</FromUserName>\n" +
+        "  <CreateTime>111111</CreateTime>\n" +
+        "  <MsgType>text</MsgType>\n" +
+        "  <Content>ipsum minim ad</Content>\n" +
+        "</xml>");
+
+    AbstractMessage abstractMessage = xmlTranslator.toAbstractMessage(xmlString);
+    System.out.println(abstractMessage.getMsgType());
+    TextMessage textMessage = (TextMessage) abstractMessage;
+    System.out.println(textMessage.getContent());
+  }
+}

@@ -1,5 +1,7 @@
 server:
   port: 5000
+
+
 wechat:
   appID: wx350c92e7371ed585
   appSecret: 82ceb04822372335d6ecd473d116f996
