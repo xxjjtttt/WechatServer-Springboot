@@ -3,8 +3,7 @@
 # TODO
 - 完善各类消息的Handler
 - 将任务触发的配置文件与主配置文件拆分
-- 获取AccessToken 以及 使用AccessToken的各种功能(自定义菜单栏、群发消息、上传媒体文件)
-
+- ~~获取AccessToken~~ 以及 使用AccessToken的各种功能(~~自定义菜单栏~~、群发消息、上传媒体文件)
 
 # 项目结构
 ```
@@ -13,7 +12,7 @@ D:.
 │  ├─java
 │  │  └─org
 │  │      └─wechat
-│  │          ├─component
+│  │          ├─component  (服务器的各种依赖)
 │  │          │  └─handler (各种消息处理器)
 │  │          ├─controller (服务器请求的视图函数)
 │  │          ├─mine

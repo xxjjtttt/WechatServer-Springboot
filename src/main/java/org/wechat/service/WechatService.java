@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.wechat.component.MenuCreater;
+import org.wechat.component.Reader;
 import org.wechat.component.Receiver;
 import org.wechat.component.WechatServerInfo;
 
@@ -23,11 +25,16 @@ import java.util.Collections;
 public class WechatService {
   private WechatServerInfo wechatServerInfo;
   private Receiver receiver;
+  private Reader reader;
+  private MenuCreater menuCreater;
+
 
   @Autowired
-  public WechatService(WechatServerInfo wechatServerInfo, Receiver receiver) {
+  public WechatService(WechatServerInfo wechatServerInfo, Receiver receiver, Reader reader, MenuCreater menuCreater) {
     this.wechatServerInfo = wechatServerInfo;
     this.receiver = receiver;
+    this.reader = reader;
+    this.menuCreater = menuCreater;
   }
 
   public String connectServer(HttpServletRequest httpServletRequest) {
@@ -58,22 +65,25 @@ public class WechatService {
       return "fail";
     }
 //    System.out.println("bing successfully");
+    try {
+      menuCreater.InitMenu();
+    } catch (IOException e) {
+      System.out.println("fail to init menu");
+    }
     return echoStr;
+
   }
 
   public String makeResponse(HttpServletRequest httpServletRequest) {
-    StringBuilder stringBuilder = new StringBuilder();
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(httpServletRequest.getInputStream(), StandardCharsets.UTF_8))) {
+    try {
+      StringBuilder stringBuilder = new StringBuilder();
+      BufferedReader reader = new BufferedReader(new InputStreamReader(httpServletRequest.getInputStream(), StandardCharsets.UTF_8));
       String line;
       while ((line = reader.readLine()) != null) {
         stringBuilder.append(line).append(System.lineSeparator());
       }
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    String xmlString = stringBuilder.toString();
-//    System.out.println("receive a string" + xmlString);
-    try {
+      String xmlString = stringBuilder.toString();
+//      System.out.println("receive a string" + xmlString);
       return receiver.makeResponse(xmlString);
     } catch (DocumentException | IOException | ClassNotFoundException | InvocationTargetException |
              NoSuchMethodException | InstantiationException | IllegalAccessException e) {

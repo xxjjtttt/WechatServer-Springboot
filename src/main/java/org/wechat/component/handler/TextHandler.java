@@ -2,6 +2,7 @@ package org.wechat.component.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.wechat.component.FunctionCaller;
 import org.wechat.component.PatternMatcher;
@@ -35,7 +36,7 @@ public class TextHandler {
     for (String[] task : order) {
       matcher = patternMatcher.match(task[0], content);
       if (matcher != null) {
-        dataList = functionCaller.getMyContent(task[1], matcher);
+        dataList = functionCaller.getDataList(task[1], matcher);
       }
     }
 

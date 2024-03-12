@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 public class WeatherForecast extends AbstractTask {
 
   private HashMap<String, String> provinceHashMap;
+
   public WeatherForecast() {
     provinceHashMap = new HashMap<>();
     provinceHashMap.put("北京市", "BJ");
@@ -66,11 +67,11 @@ public class WeatherForecast extends AbstractTask {
 
   private String getStatonId(String provinceCode, String city) {
     String statonidUrl = "http://www.nmc.cn/rest/province/A%s".formatted(provinceCode);
-    Requests requests = new Requests(statonidUrl,false);
+    Requests requests = new Requests(statonidUrl, false);
     try {
       Json json = new Json(requests.get().body().string());
       for (JsonNode jsonNode : json.getRoot()) {
-        Re re = new Re(city,jsonNode.get("city").asText());
+        Re re = new Re(city, jsonNode.get("city").asText());
         if (re.isValid()) {
           return jsonNode.get("code").asText();
         }
@@ -85,10 +86,10 @@ public class WeatherForecast extends AbstractTask {
     String url = "http://www.nmc.cn/rest/weather?stationid=%s".formatted(stationId);
     Requests requests = new Requests(url, false);
     Json json = new Json(requests.get().body().string());
-    String currentTemperature = json.getNode("data").get("real").get("weather").get("temperature").asText();
-    String currentFeelTemperature = json.getNode("data").get("real").get("weather").get("feelst").asText();
-    String currentWeather = json.getNode("data").get("real").get("weather").get("info").asText();
-    JsonNode temperaturePredict = json.getNode("data").get("tempchart");
+    String currentTemperature = json.get("data").get("real").get("weather").get("temperature").asText();
+    String currentFeelTemperature = json.get("data").get("real").get("weather").get("feelst").asText();
+    String currentWeather = json.get("data").get("real").get("weather").get("info").asText();
+    JsonNode temperaturePredict = json.get("data").get("tempchart");
     ArrayList<String[]> arrayLists = new ArrayList<>();
     for (JsonNode jsonNode : temperaturePredict) {
       if (!jsonNode.get("day_img").asText().equals("9999")) {
@@ -100,13 +101,13 @@ public class WeatherForecast extends AbstractTask {
         String weatherText;
         if (nightText.equals(dayText)) {
           weatherText = nightText;
-        }else {
-          weatherText = "%s转%s".formatted(dayText,nightText);
+        } else {
+          weatherText = "%s转%s".formatted(dayText, nightText);
         }
-        arrayLists.add(new String[]{time,maxTemp,minTemp,weatherText});
+        arrayLists.add(new String[]{time, maxTemp, minTemp, weatherText});
       }
     }
-    String message = ("%s %s: \n实时天气: %s\n室外温度: %s℃").formatted(province,city,currentWeather,currentTemperature);
+    String message = ("%s %s: \n实时天气: %s\n室外温度: %s℃").formatted(province, city, currentWeather, currentTemperature);
 
     if (currentFeelTemperature.equals("9999")) {
       System.out.println(currentFeelTemperature);
@@ -118,7 +119,7 @@ public class WeatherForecast extends AbstractTask {
     String template = "%s:\n天气%s 温度%s-%s℃\n";
 
     for (String[] arrayList : arrayLists) {
-      message += template.formatted(arrayList[0],arrayList[3],arrayList[1],arrayList[2]);
+      message += template.formatted(arrayList[0], arrayList[3], arrayList[1], arrayList[2]);
     }
 
     return message;
@@ -132,14 +133,19 @@ public class WeatherForecast extends AbstractTask {
 
     String stationId = getStatonId(provinceCode, city);
     if (stationId == "error") {
-      return new String[]{"text","我找不到你希望查询的地区，重新试试吧"};
+      return new String[]{"text", "我找不到你希望查询的地区，重新试试吧"};
     }
 
     try {
-      String myMessage = getWeatherInfo(stationId,province,city);
-      return new String[]{"text",myMessage};
+      String myMessage = getWeatherInfo(stationId, province, city);
+      return new String[]{"text", myMessage};
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  public String[] getDataList() {
+    return new String[0];
   }
 }

@@ -12,4 +12,6 @@ public abstract class AbstractTask {
    */
 
   public abstract String[] getDataList(Matcher matcher);
+
+  public abstract String[] getDataList();
 }

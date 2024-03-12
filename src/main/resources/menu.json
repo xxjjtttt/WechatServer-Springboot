@@ -1,0 +1,18 @@
+{
+  "button":[
+    {
+      "type":"click",
+      "name":"帮助",
+      "key":"HELP"
+    },
+    {
+      "type": "view",
+      "name": "开源",
+      "url":"https://github.com/xxjjtttt/WechatServer-Springboot"
+    },
+    {
+      "type":"click",
+      "name":"支持",
+      "key":"SUPPORT"
+    }]
+}

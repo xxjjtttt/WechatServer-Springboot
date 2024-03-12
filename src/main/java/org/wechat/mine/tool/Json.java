@@ -4,7 +4,6 @@ package org.wechat.mine.tool;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 
 public class Json {
 
@@ -23,11 +22,11 @@ public class Json {
     return root;
   }
 
-  public JsonNode getNode(String key) {
+  public JsonNode get(String key) {
     return root.get(key);
   }
 
-  public JsonNode getNode(int index) {
+  public JsonNode get(int index) {
     return root.get(index);
   }
 }

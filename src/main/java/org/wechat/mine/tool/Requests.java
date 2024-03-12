@@ -24,8 +24,8 @@ public class Requests {
     if (useProxy) {
       String proxy = getProxy();
       Json json = new Json(proxy);
-      String ip = json.getNode("data").get("proxy_list").get(0).get("ip").asText();
-      int port = json.getNode("data").get("proxy_list").get(0).get("port").asInt();
+      String ip = json.get("data").get("proxy_list").get(0).get("ip").asText();
+      int port = json.get("data").get("proxy_list").get(0).get("port").asInt();
       okHttpClient = new OkHttpClient.Builder()
           .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ip, port)))
           .build();

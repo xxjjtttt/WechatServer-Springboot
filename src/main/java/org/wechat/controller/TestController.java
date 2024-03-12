@@ -19,9 +19,11 @@ import java.io.File;
 public class TestController {
   private WechatServerInfo wechatServerInfo;
 
+
   @Autowired
   public TestController(WechatServerInfo wechatServerInfo) {
     this.wechatServerInfo = wechatServerInfo;
+
   }
 
   @ResponseBody
@@ -45,5 +47,11 @@ public class TestController {
           .contentType(MediaType.APPLICATION_OCTET_STREAM)
           .body(null);
     }
+  }
+
+  @ResponseBody
+  @RequestMapping("/test")
+  public String getAccessToken() {
+    return wechatServerInfo.getAccessToken();
   }
 }

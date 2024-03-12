@@ -46,7 +46,7 @@ public class MessageProcessor {
         addTextMessageElement(root, args[1]);
         break;
       case "image":
-        addImageMessageElement(root, args[1], args[2]);
+        addImageMessageElement(root, args[1]);
         break;
       case "voice":
         break;
@@ -84,8 +84,8 @@ public class MessageProcessor {
     root.addElement("Content").addCDATA(Content);
   }
 
-  private void addImageMessageElement(Element root, String mediaId, String picUrl) {
-    root.addElement("MediaId").addCDATA(mediaId);
-    root.addElement("PicUrl").addCDATA(picUrl);
+  private void addImageMessageElement(Element root, String mediaId) {
+    root.addElement("MsgType").addCDATA("image");
+    root.addElement("Image").addElement("MediaId").addCDATA(mediaId);
   }
 }
