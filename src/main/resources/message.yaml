@@ -1,2 +1,3 @@
-text:
-  key:
+# order
+# 0. pattern (正则表达式字符串)
+# 1. className (返回一个业务逻辑处理后的字符串)

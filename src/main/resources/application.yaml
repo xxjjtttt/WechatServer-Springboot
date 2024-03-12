@@ -7,3 +7,9 @@ wechat:
   appSecret: 82ceb04822372335d6ecd473d116f996
   token: testing
   encodingAESKey: testing
+
+
+text:
+  order:
+    - - "^([\\u4e00-\\u9fa5]{2,5}) ([\\u4e00-\\u9fa5]{2,5}) 天气$"
+      - "org.wechat.mine.task.WeatherForecast"

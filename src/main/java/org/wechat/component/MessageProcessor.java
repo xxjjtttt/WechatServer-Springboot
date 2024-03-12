@@ -1,6 +1,7 @@
 package org.wechat.component;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
@@ -16,41 +17,45 @@ import java.util.HashMap;
 
 @Component
 public class MessageProcessor {
-  public HashMap<String,String> createHashMap(String xmlString) {
+  public HashMap<String, String> createHashMap(String xmlString) throws DocumentException {
     HashMap<String, String> resultMap = new HashMap<>();
-    try {
-      // 创建SAXReader对象
-      SAXReader reader = new SAXReader();
-      // 读取XML字符串
-      Document document = reader.read(new StringReader(xmlString));
-      // 获取根元素
-      Element rootElement = document.getRootElement();
-      // 遍历根元素的子元素
-      for (Element element : rootElement.elements()) {
-        // 将元素的标签名和文本内容添加到Map中
-        resultMap.put(element.getName(), element.getText());
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
+    // 创建SAXReader对象
+    SAXReader reader = new SAXReader();
+    // 读取XML字符串
+    Document document = reader.read(new StringReader(xmlString));
+    // 获取根元素
+    Element rootElement = document.getRootElement();
+    // 遍历根元素的子元素
+    for (Element element : rootElement.elements()) {
+      // 将元素的标签名和文本内容添加到Map中
+      resultMap.put(element.getName(), element.getText());
     }
     return resultMap;
   }
 
 
   // args[0] MsgType args[1]... 响应的数据组成的数组 类型不一样 长度同样不会一样
-  public String createMessage(HashMap<String, String> map, String[] args) {
+  public String createMessage(HashMap<String, String> map, String[] args) throws IOException {
     // 创建Document对象
     Document document = DocumentHelper.createDocument();
     // 创建根元素
     Element root = document.addElement("xml");
     addNecessaryElemant(root, map.get("FromUserName"), map.get("ToUserName"));
     switch (args[0]) {
-      case "text": addTextMessageElement(root, args[1]); break;
-      case "image": addImageMessageElement(root, args[1], args[2]); break;
-      case "voice": break;
-      case "video": break;
-      case "music": break;
-      case "news": break;
+      case "text":
+        addTextMessageElement(root, args[1]);
+        break;
+      case "image":
+        addImageMessageElement(root, args[1], args[2]);
+        break;
+      case "voice":
+        break;
+      case "video":
+        break;
+      case "music":
+        break;
+      case "news":
+        break;
     }
     // 使用OutputFormat设置输出格式
     OutputFormat format = OutputFormat.createPrettyPrint();
@@ -59,12 +64,9 @@ public class MessageProcessor {
     // 使用XMLWriter将Document对象写入到字符串中
     StringWriter writer = new StringWriter();
     XMLWriter xmlWriter = new XMLWriter(writer, format);
-    try {
-      xmlWriter.write(document);
-      xmlWriter.close();
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+
+    xmlWriter.write(document);
+    xmlWriter.close();
 
     return writer.toString();
   }
