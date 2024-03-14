@@ -1,0 +1,8 @@
+# 从微信公众号获取 必要参数
+
+
+wechat:
+  appId: wx350c92e7371ed585
+  appSecret: 82ceb04822372335d6ecd473d116f996
+  token: testing
+  encodingAESKey: testing

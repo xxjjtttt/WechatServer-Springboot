@@ -1,24 +1,6 @@
 server:
   port: 5000
 
-
-wechat:
-  appId: wx350c92e7371ed585
-  appSecret: 82ceb04822372335d6ecd473d116f996
-  token: testing
-  encodingAESKey: testing
-
-
-text:
-  order:
-    - - "^([\\u4e00-\\u9fa5]{2,5}) ([\\u4e00-\\u9fa5]{2,5}) 天气$"
-      - "org.wechat.mine.task.WeatherForecast"
-
-
-
-event:
-  order:
-    - - "HELP"
-      - "org.wechat.mine.task.HelpTask"
-    - - "SUPPORT"
-      - "org.wechat.mine.task.SupportTask"
+spring:
+  config:
+    import: classpath:wechat.yaml,classpath:text.yaml,classpath:event.yaml

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Json {
 
-  private JsonNode root;
+  private final JsonNode root;
 
   public Json(String jsonString) {
     ObjectMapper mapper = new ObjectMapper();

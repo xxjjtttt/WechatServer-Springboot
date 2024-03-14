@@ -9,11 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
 
 public class WeatherForecast extends AbstractTask {
 
-  private HashMap<String, String> provinceHashMap;
+  private final HashMap<String, String> provinceHashMap;
 
   public WeatherForecast() {
     provinceHashMap = new HashMap<>();
@@ -125,10 +124,11 @@ public class WeatherForecast extends AbstractTask {
     return message;
   }
 
+
   @Override
-  public String[] getDataList(Matcher matcher) {
-    String province = matcher.group(1);
-    String city = matcher.group(2);
+  public String[] getDataList(String[] args) {
+    String province = args[0];
+    String city = args[1];
     String provinceCode = getProvinceCode(province);
 
     String stationId = getStatonId(provinceCode, city);

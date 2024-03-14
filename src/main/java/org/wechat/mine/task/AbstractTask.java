@@ -1,8 +1,5 @@
 package org.wechat.mine.task;
 
-import java.util.regex.Matcher;
-
-
 public abstract class AbstractTask {
   /*
     自己的业务逻辑的类必须继承AbstractTask类 并实现getDataList函数
@@ -11,7 +8,7 @@ public abstract class AbstractTask {
     DataList[1]...: 是这个响应类型所必须的参数 text类型 -> content; image类型 -> mediaId picUrl
    */
 
-  public abstract String[] getDataList(Matcher matcher);
+  public abstract String[] getDataList(String[] args);
 
   public abstract String[] getDataList();
 }

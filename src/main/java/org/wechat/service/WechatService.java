@@ -90,7 +90,6 @@ public class WechatService {
       System.out.println("your business function error");
       return "succeed";
     }
-
   }
 
 }

@@ -21,8 +21,8 @@ public class MenuCreater {
   public void InitMenu() throws IOException {
     String accessToken = wechatServerInfo.getAccessToken();
     String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s".formatted(accessToken);
-    String jsonString = reader.readString("src/main/resources/menu.json");
+    String jsonString = reader.readString("/menu.json");
+    System.out.println(jsonString);
     httpSender.doPost(url, jsonString);
   }
-
 }

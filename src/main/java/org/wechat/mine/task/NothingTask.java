@@ -1,6 +1,6 @@
 package org.wechat.mine.task;
 
-public class SupportTask extends AbstractTask {
+public class NothingTask extends AbstractTask {
 
   @Override
   public String[] getDataList(String[] args) {
@@ -9,6 +9,6 @@ public class SupportTask extends AbstractTask {
 
   @Override
   public String[] getDataList() {
-    return new String[]{"image", "nSPRzIDLfs-aDoSaZWyoOSVx101l4F79eTWMdZYVnZizAgmeBZrJEhgMqeD6kYdX"};
+    return new String[]{"text", "你发的是什么啦，看不懂啦啊🥰"};
   }
 }

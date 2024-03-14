@@ -3,13 +3,14 @@ package org.wechat.component.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.wechat.component.FunctionCaller;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.regex.Matcher;
 
 @Component
+@PropertySource(value = {"event.yaml"})
 @ConfigurationProperties(prefix = "event")
 public class EventHandler {
 
@@ -26,11 +27,11 @@ public class EventHandler {
     this.order = order;
   }
 
-  public String[] getDataList(String event) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+  public String[] getDataList(String event, String eventKey) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
     String[] dataList = null;
     for (String[] task : order) {
-      if (event.equals(task[0])) {
-        dataList = functionCaller.getDataList(task[1]);
+      if (event.equals(task[0]) || eventKey.equals(task[1])) {
+        dataList = functionCaller.getDataList(task[2]);
       }
     }
     return dataList;

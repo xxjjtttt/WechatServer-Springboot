@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Re {
-  private Matcher matcher;
+  private final Matcher matcher;
 
   public Re(String reString, String content) {
     Pattern pattern = Pattern.compile(reString);
@@ -13,10 +13,7 @@ public class Re {
   }
 
   public Boolean isValid() {
-    if (matcher.find()) {
-      return true;
-    }
-    return false;
+    return matcher.find();
   }
 
   public Matcher match() {

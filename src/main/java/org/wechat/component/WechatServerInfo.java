@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.time.Instant;
 
 
 @Component
+@PropertySource(value = {"wechat.yaml"})
 public class WechatServerInfo {
   @Value("${wechat.appId}")
   private String appId;
@@ -49,6 +51,7 @@ public class WechatServerInfo {
       String jsonString = httpSender.doGet(url);
       JsonMapper jsonMapper = new JsonMapper();
       JsonNode jsonNode = jsonMapper.readTree(jsonString);
+      System.out.println(jsonString);
       accessToken = jsonNode.get("access_token").asText();
     } catch (IOException e) {
       System.out.println("fail to get AccessToken");

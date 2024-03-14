@@ -8,10 +8,9 @@ import org.wechat.component.FunctionCaller;
 import org.wechat.component.PatternMatcher;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.regex.Matcher;
 
 @Component
-//@PropertySource(value = {"classpath: message.yaml"})
+@PropertySource(value = {"text.yaml"})
 @ConfigurationProperties(prefix = "text")
 public class TextHandler {
   private FunctionCaller functionCaller;
@@ -31,15 +30,14 @@ public class TextHandler {
   }
 
   public String[] getDataList(String content) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-    Matcher matcher = null;
+    String[] args = null;
     String[] dataList = null;
     for (String[] task : order) {
-      matcher = patternMatcher.match(task[0], content);
-      if (matcher != null) {
-        dataList = functionCaller.getDataList(task[1], matcher);
+      args = patternMatcher.match(task[0], content);
+      if (args.length != 0) {
+        dataList = functionCaller.getDataList(task[1], args);
       }
     }
-
     return dataList;
   }
 

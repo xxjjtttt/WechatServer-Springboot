@@ -42,20 +42,12 @@ public class MessageProcessor {
     Element root = document.addElement("xml");
     addNecessaryElemant(root, map.get("FromUserName"), map.get("ToUserName"));
     switch (args[0]) {
-      case "text":
-        addTextMessageElement(root, args[1]);
-        break;
-      case "image":
-        addImageMessageElement(root, args[1]);
-        break;
-      case "voice":
-        break;
-      case "video":
-        break;
-      case "music":
-        break;
-      case "news":
-        break;
+      case "text": addTextMessageElement(root, args[1]); break;
+      case "image": addImageMessageElement(root, args[1]); break;
+      case "voice": break;
+      case "video": break;
+      case "music": break;
+      case "news": break;
     }
     // 使用OutputFormat设置输出格式
     OutputFormat format = OutputFormat.createPrettyPrint();

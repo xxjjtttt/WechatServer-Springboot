@@ -1,0 +1,10 @@
+# order
+# 0. pattern (正则表达式字符串)
+# 1. className (业务处理类)
+
+text:
+  order:
+    - - "^([\\u4e00-\\u9fa5]{2,5}) ([\\u4e00-\\u9fa5]{2,5}) 天气$"
+      - "org.wechat.mine.task.WeatherForecast"
+    - - "^(.*) ([\u4e00-\u9fa5]) 查词$"
+      - "org.wechat.mine.task.SearchWords"

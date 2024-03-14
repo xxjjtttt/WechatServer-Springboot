@@ -1,0 +1,16 @@
+# order
+# 0. event
+# 1. eventKey
+# 1. className (业务处理类)
+
+event:
+  order:
+    - - "subscribe"
+      - ""
+      - "org.wechat.mine.task.HelpTask"
+    - - "CLICK"
+      - "HELP"
+      - "org.wechat.mine.task.HelpTask"
+    - - "CLICK"
+      - "SUPPORT"
+      - "org.wechat.mine.task.SupportTask"

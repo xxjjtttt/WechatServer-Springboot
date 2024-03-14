@@ -11,8 +11,8 @@ import java.net.Proxy;
 
 
 public class Requests {
-  private String url;
-  private Boolean useProxy;
+  private final String url;
+  private final Boolean useProxy;
 
   public Requests(String url, Boolean useProxy) {
     this.url = url;
